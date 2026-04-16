@@ -4,6 +4,19 @@ var terminalLocked = false;
 var versionVisible = false;
 
 var loadingPresets = {
+  startup: {
+    title: "SYSTEM STARTUP // SECURE NODE INIT",
+    lines: [
+      "BOOTING TACTICAL TERMINAL...",
+      "INITIALIZING DISPLAY LAYERS...",
+      "VERIFYING INTERNAL NODE INTEGRITY...",
+      "MOUNTING SECURE SESSION SHELL...",
+      "STANDBY SCREEN READY."
+    ],
+    lineDelay: 220,
+    finalDelay: 420
+  },
+
   login: {
     title: "TERMINAL BOOT // AUTHENTICATION",
     lines: [
@@ -13,8 +26,8 @@ var loadingPresets = {
       "MOUNTING OFFICER FILE...",
       "SESSION VALIDATED."
     ],
-    lineDelay: 150,
-    finalDelay: 260
+    lineDelay: 180,
+    finalDelay: 320
   },
 
   operations: {
@@ -26,8 +39,8 @@ var loadingPresets = {
       "MOUNTING SWAT INCIDENT REGISTRY...",
       "ARCHIVE READY."
     ],
-    lineDelay: 75,
-    finalDelay: 130
+    lineDelay: 115,
+    finalDelay: 220
   },
 
   operationsReturn: {
@@ -39,8 +52,8 @@ var loadingPresets = {
       "RESTORING INCIDENT REGISTRY...",
       "ARCHIVE READY."
     ],
-    lineDelay: 70,
-    finalDelay: 120
+    lineDelay: 105,
+    finalDelay: 210
   },
 
   operator: {
@@ -52,8 +65,8 @@ var loadingPresets = {
       "LOADING PERSONNEL RECORD...",
       "OFFICER FILE READY."
     ],
-    lineDelay: 70,
-    finalDelay: 120
+    lineDelay: 105,
+    finalDelay: 210
   },
 
   records: {
@@ -65,8 +78,8 @@ var loadingPresets = {
       "MOUNTING INTERNAL REVIEW INDEX...",
       "RECORDS READY."
     ],
-    lineDelay: 80,
-    finalDelay: 140
+    lineDelay: 120,
+    finalDelay: 230
   },
 
   missionDefault: {
@@ -78,8 +91,8 @@ var loadingPresets = {
       "LOADING FIELD TIMELINE...",
       "INCIDENT FILE READY."
     ],
-    lineDelay: 52,
-    finalDelay: 95
+    lineDelay: 95,
+    finalDelay: 180
   },
 
   mission_lockdown_12: {
@@ -91,8 +104,8 @@ var loadingPresets = {
       "LOADING HOSTAGE RESPONSE TIMELINE...",
       "LOCKDOWN 12 FILE READY."
     ],
-    lineDelay: 52,
-    finalDelay: 95
+    lineDelay: 95,
+    finalDelay: 180
   },
 
   mission_harbor_nine: {
@@ -104,8 +117,8 @@ var loadingPresets = {
       "LOADING SEIZURE AND ARREST LOG...",
       "HARBOR NINE FILE READY."
     ],
-    lineDelay: 52,
-    finalDelay: 95
+    lineDelay: 95,
+    finalDelay: 180
   },
 
   mission_glass_hall: {
@@ -117,8 +130,8 @@ var loadingPresets = {
       "LOADING INTERIOR CONTACT REPORT...",
       "GLASS HALL FILE READY."
     ],
-    lineDelay: 52,
-    finalDelay: 95
+    lineDelay: 95,
+    finalDelay: 180
   },
 
   mission_dead_air: {
@@ -130,8 +143,8 @@ var loadingPresets = {
       "LOADING LOW-LIGHT ENTRY TIMELINE...",
       "DEAD AIR FILE READY."
     ],
-    lineDelay: 52,
-    finalDelay: 95
+    lineDelay: 95,
+    finalDelay: 180
   },
 
   mission_ivory_line: {
@@ -143,8 +156,8 @@ var loadingPresets = {
       "LOADING MINOR PROTECTION REPORT...",
       "IVORY LINE FILE READY."
     ],
-    lineDelay: 52,
-    finalDelay: 95
+    lineDelay: 95,
+    finalDelay: 180
   },
 
   mission_night_warrant: {
@@ -156,8 +169,8 @@ var loadingPresets = {
       "LOADING EVIDENCE AND ARREST REPORT...",
       "NIGHT WARRANT FILE READY."
     ],
-    lineDelay: 52,
-    finalDelay: 95
+    lineDelay: 95,
+    finalDelay: 180
   },
 
   mission_redline_yard: {
@@ -169,8 +182,8 @@ var loadingPresets = {
       "LOADING SECTOR CLEARANCE TIMELINE...",
       "REDLINE YARD FILE READY."
     ],
-    lineDelay: 52,
-    finalDelay: 95
+    lineDelay: 95,
+    finalDelay: 180
   },
 
   mission_civic_echo: {
@@ -182,8 +195,8 @@ var loadingPresets = {
       "LOADING FLOOR-BY-FLOOR REPORT...",
       "CIVIC ECHO FILE READY."
     ],
-    lineDelay: 52,
-    finalDelay: 95
+    lineDelay: 95,
+    finalDelay: 180
   },
 
   mission_twin_palms: {
@@ -195,8 +208,8 @@ var loadingPresets = {
       "LOADING ARREST AND EVIDENCE REPORT...",
       "TWIN PALMS FILE READY."
     ],
-    lineDelay: 52,
-    finalDelay: 95
+    lineDelay: 95,
+    finalDelay: 180
   },
 
   mission_long_march: {
@@ -208,8 +221,8 @@ var loadingPresets = {
       "LOADING SUSTAINED SEARCH REPORT...",
       "LONG MARCH FILE READY."
     ],
-    lineDelay: 52,
-    finalDelay: 95
+    lineDelay: 95,
+    finalDelay: 180
   },
 
   mission_static_breach: {
@@ -221,8 +234,8 @@ var loadingPresets = {
       "LOADING ENGAGEMENT AND WITHDRAWAL REPORT...",
       "STATIC BREACH FILE READY."
     ],
-    lineDelay: 52,
-    finalDelay: 95
+    lineDelay: 95,
+    finalDelay: 180
   },
 
   mission_blue_room: {
@@ -234,8 +247,8 @@ var loadingPresets = {
       "LOADING CRITICAL CONTACT REPORT...",
       "BLUE ROOM FILE READY."
     ],
-    lineDelay: 52,
-    finalDelay: 95
+    lineDelay: 95,
+    finalDelay: 180
   },
 
   mission_crosswind: {
@@ -247,8 +260,8 @@ var loadingPresets = {
       "LOADING CIVILIAN EXTRACTION REPORT...",
       "CROSSWIND FILE READY."
     ],
-    lineDelay: 52,
-    finalDelay: 95
+    lineDelay: 95,
+    finalDelay: 180
   },
 
   mission_saint_elias: {
@@ -260,8 +273,8 @@ var loadingPresets = {
       "LOADING SUSPECT LOCATION TIMELINE...",
       "SAINT ELIAS FILE READY."
     ],
-    lineDelay: 52,
-    finalDelay: 95
+    lineDelay: 95,
+    finalDelay: 180
   },
 
   mission_winter_garden: {
@@ -273,8 +286,8 @@ var loadingPresets = {
       "LOADING CONTACT AND EXTRACTION REPORT...",
       "WINTER GARDEN FILE READY."
     ],
-    lineDelay: 52,
-    finalDelay: 95
+    lineDelay: 95,
+    finalDelay: 180
   },
 
   default: {
@@ -286,8 +299,8 @@ var loadingPresets = {
       "MOUNTING OFFICER FILE...",
       "SESSION VALIDATED."
     ],
-    lineDelay: 100,
-    finalDelay: 180
+    lineDelay: 120,
+    finalDelay: 220
   }
 };
 
@@ -410,16 +423,18 @@ function playCrtShutdownEffect() {
   }, 120);
 }
 
-function bootTo(index, presetName) {
+function bootTo(index, presetName, options) {
   if (terminalLocked || bootRunning) return;
 
   var overlay = document.getElementById("loadingOverlay");
   var bar = document.getElementById("progressBar");
   var titleEl = document.getElementById("loadingTitle");
+  var opts = options || {};
+  var revealVersion = opts.revealVersion !== false;
 
   if (!overlay || !bar) {
     goTo(index);
-    if (index > 0) showVersionStamp();
+    if (index > 0 && revealVersion) showVersionStamp();
     return;
   }
 
@@ -442,7 +457,7 @@ function bootTo(index, presetName) {
       setTimeout(function () {
         if (!terminalLocked) {
           goTo(index);
-          if (index > 0) showVersionStamp();
+          if (index > 0 && revealVersion) showVersionStamp();
         }
         overlay.classList.remove("active");
         bootRunning = false;
@@ -465,7 +480,7 @@ function bootTo(index, presetName) {
     setTimeout(writeNextLine, lineDelay);
   }
 
-  setTimeout(writeNextLine, 40);
+  setTimeout(writeNextLine, 80);
 }
 
 function populateMissionContent(mission) {
@@ -542,7 +557,7 @@ function openMission(key) {
 
   populateMissionContent(mission);
   scrollScreenTop(3);
-  bootTo(3, getMissionPresetName(key));
+  bootTo(3, getMissionPresetName(key), { revealVersion: true });
 }
 
 function lockTerminalPermanently() {
@@ -631,4 +646,8 @@ window.onload = function () {
   hideVersionStamp();
   goTo(0);
   scrollScreenTop(0);
+
+  setTimeout(function () {
+    bootTo(0, "startup", { revealVersion: false });
+  }, 120);
 };
