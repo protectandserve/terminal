@@ -250,7 +250,6 @@ var loadingPresets = {
 function showVersionStamp() {
   var stamp = document.getElementById("versionStamp");
   if (!stamp || versionVisible) return;
-
   versionVisible = true;
   stamp.classList.add("visible");
 }
@@ -258,7 +257,6 @@ function showVersionStamp() {
 function hideVersionStamp() {
   var stamp = document.getElementById("versionStamp");
   if (!stamp) return;
-
   versionVisible = false;
   stamp.classList.remove("visible");
 }
@@ -374,32 +372,9 @@ function playCrtShutdownEffect() {
   }, 120);
 }
 
-function typeText(element, text, speed, callback) {
-  if (!element) {
-    if (callback) callback();
-    return;
-  }
-
-  element.textContent = "";
-  var i = 0;
-
-  function step() {
-    if (i < text.length) {
-      element.textContent += text.charAt(i);
-      i++;
-      setTimeout(step, speed);
-    } else if (callback) {
-      callback();
-    }
-  }
-
-  step();
-}
-
 function bootTo(index, presetName) {
   if (terminalLocked) return;
   if (bootRunning) return;
-  if (index === currentIndex) return;
 
   var overlay = document.getElementById("loadingOverlay");
   var bar = document.getElementById("progressBar");
@@ -425,30 +400,17 @@ function bootTo(index, presetName) {
   resetLoading();
   overlay.classList.add("active");
 
-  var glitchCount = 1 + Math.floor(Math.random() * 2);
-  for (var g = 0; g < glitchCount; g++) {
-    (function(delay) {
-      setTimeout(function() {
-        overlay.classList.remove("glitch");
-        void overlay.offsetWidth;
-        overlay.classList.add("glitch");
-      }, delay);
-    })(180 + Math.floor(Math.random() * 700));
-  }
-
   function writeNextLine() {
     if (currentLine >= lines.length) {
       setTimeout(function () {
         if (!terminalLocked) {
           goTo(index);
-          if (index > 0) {
-            showVersionStamp();
-          }
+          if (index > 0) showVersionStamp();
         }
         overlay.classList.remove("active");
         bootRunning = false;
         scrollScreenTop(index);
-      }, 260);
+      }, 220);
       return;
     }
 
@@ -459,13 +421,12 @@ function bootTo(index, presetName) {
       return;
     }
 
+    el.textContent = lines[currentLine];
     el.classList.add("visible");
+    bar.style.width = progress[currentLine] + "%";
+    currentLine++;
 
-    typeText(el, lines[currentLine], 14, function () {
-      bar.style.width = progress[currentLine] + "%";
-      currentLine++;
-      setTimeout(writeNextLine, 90);
-    });
+    setTimeout(writeNextLine, 110);
   }
 
   writeNextLine();
@@ -511,8 +472,8 @@ function openMission(key) {
   if (theatreEl) theatreEl.textContent = mission.theatre || "—";
   if (riskEl) riskEl.textContent = mission.risk || "—";
 
-  if (contextEl) contextEl.textContent = "";
-  if (outcomeEl) outcomeEl.textContent = "";
+  if (contextEl) contextEl.textContent = mission.context || "";
+  if (outcomeEl) outcomeEl.textContent = mission.outcome || "";
   if (timelineEl) timelineEl.innerHTML = "";
 
   if (arrestEl) arrestEl.textContent = mission.arrest || "—";
@@ -528,47 +489,18 @@ function openMission(key) {
   if (witnessBoxEl) witnessBoxEl.style.display = mission.witness ? "" : "none";
   if (attachmentBoxEl) attachmentBoxEl.style.display = mission.attachment ? "" : "none";
 
-  if (noteEl) noteEl.textContent = "";
-  if (noteBoxEl) {
-    noteBoxEl.style.display = mission.note ? "" : "none";
+  if (noteEl) noteEl.textContent = mission.note || "";
+  if (noteBoxEl) noteBoxEl.style.display = mission.note ? "" : "none";
+
+  if (timelineEl && mission.timeline && mission.timeline.length) {
+    for (var i = 0; i < mission.timeline.length; i++) {
+      var li = document.createElement("li");
+      li.textContent = mission.timeline[i];
+      timelineEl.appendChild(li);
+    }
   }
 
-  scrollScreenTop(3);
   bootTo(3, getMissionPresetName(key));
-
-  setTimeout(function () {
-    if (terminalLocked) return;
-
-    scrollScreenTop(3);
-
-    typeText(contextEl, mission.context, 5, function () {
-      var i = 0;
-
-      function addNext() {
-        if (terminalLocked) return;
-
-        if (i >= mission.timeline.length) {
-          typeText(outcomeEl, mission.outcome, 5, function () {
-            if (mission.note && noteEl) {
-              typeText(noteEl, mission.note, 5);
-            }
-          });
-          return;
-        }
-
-        var li = document.createElement("li");
-        timelineEl.appendChild(li);
-
-        typeText(li, mission.timeline[i], 5, function () {
-          i++;
-          setTimeout(addNext, 50);
-        });
-      }
-
-      addNext();
-    });
-
-  }, 500);
 }
 
 function lockTerminalPermanently() {
@@ -627,12 +559,11 @@ function terminateSession() {
       return;
     }
 
+    el.textContent = lines[currentLine];
     el.classList.add("visible");
+    currentLine++;
 
-    typeText(el, lines[currentLine], 18, function () {
-      currentLine++;
-      setTimeout(writeNextShutdownLine, 180);
-    });
+    setTimeout(writeNextShutdownLine, 180);
   }
 
   writeNextShutdownLine();
