@@ -1,6 +1,7 @@
 var currentIndex = 0;
 var bootRunning = false;
 var terminalLocked = false;
+var versionVisible = false;
 
 var loadingPresets = {
   login: {
@@ -246,6 +247,22 @@ var loadingPresets = {
   }
 };
 
+function showVersionStamp() {
+  var stamp = document.getElementById("versionStamp");
+  if (!stamp || versionVisible) return;
+
+  versionVisible = true;
+  stamp.classList.add("visible");
+}
+
+function hideVersionStamp() {
+  var stamp = document.getElementById("versionStamp");
+  if (!stamp) return;
+
+  versionVisible = false;
+  stamp.classList.remove("visible");
+}
+
 function getMissionPresetName(key) {
   var presetName = "mission_" + key;
   if (loadingPresets[presetName]) return presetName;
@@ -390,6 +407,7 @@ function bootTo(index, presetName) {
 
   if (!overlay || !bar) {
     goTo(index);
+    if (index > 0) showVersionStamp();
     return;
   }
 
@@ -423,6 +441,9 @@ function bootTo(index, presetName) {
       setTimeout(function () {
         if (!terminalLocked) {
           goTo(index);
+          if (index > 0) {
+            showVersionStamp();
+          }
         }
         overlay.classList.remove("active");
         bootRunning = false;
@@ -639,6 +660,7 @@ document.addEventListener("keydown", function (event) {
 }, true);
 
 window.onload = function () {
+  hideVersionStamp();
   goTo(0);
   scrollScreenTop(0);
 };
